@@ -1,0 +1,10 @@
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\PatientService.dll.config
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\PatientService.dll
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\PatientService.pdb
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\EntityFramework.dll
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\EntityFramework.xml
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\obj\Debug\PatientService.dll
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\obj\Debug\PatientService.pdb
+C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\obj\Debug\PatientService.csprojResolveAssemblyReference.cache
