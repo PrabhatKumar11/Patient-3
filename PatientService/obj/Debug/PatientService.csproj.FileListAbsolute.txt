@@ -7,4 +7,3 @@ C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\Pati
 C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\obj\Debug\PatientService.dll
 C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\obj\Debug\PatientService.pdb
-C:\Users\Rashmi\Documents\Prabhat Documents\Wells Fargo\PatientsAndEpisodes\PatientService\obj\Debug\PatientService.csprojResolveAssemblyReference.cache

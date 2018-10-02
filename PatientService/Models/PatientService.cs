@@ -10,9 +10,11 @@ namespace RestApi.Models
     public class PatientService : IPatientService
     {
         private IPatientContext _patientContext;
-        public PatientService(IPatientContext context)
+        private ISearchPatient _searchPatient;
+        public PatientService(IPatientContext context, ISearchPatient searchPatient)
         {
             _patientContext = context;
+            _searchPatient = searchPatient;
         }
         public Patient GetPatientById(int patientId)
         {
@@ -34,10 +36,10 @@ namespace RestApi.Models
         public List<Patient> SearchPatient(string value, int pageNo, int pageSize, Sort sort)
         {
             var patients = GetPatients();
-            var patientsFound = new SearchPatient().Search(patients, value);
+            var patientsFound = _searchPatient.Search(patients, value);
             if (pageNo <= 0)
                 pageNo = 1;
-            if (pageSize <= 1)
+            if (pageSize <= 0)
                 pageSize = 20;
             //Paging
             var result = patientsFound.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
@@ -89,14 +91,33 @@ namespace RestApi.Models
             var patientsAndEpisodes =
                 from p in _patientContext.Patients
                 join e in _patientContext.Episodes on p.PatientId equals e.PatientId
-                select new { p, e };
+                into eGroup
+                select new 
+                {
+                    DateOfBirth = p.DateOfBirth,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    NhsNumber = p.NhsNumber,
+                    PatientId = p.PatientId,
+                    Episodes = (from ep in eGroup
+                                where ep.PatientId == p.PatientId
+                                select ep).ToList()
+                };
 
-            if (patientsAndEpisodes.Any())
+            foreach (var item in patientsAndEpisodes)
             {
-                var first = patientsAndEpisodes.First().p;
-                first.Episodes = patientsAndEpisodes.Select(x => x.e).ToArray();
-                patients.Add(first);
+                var patient = new Patient()
+                {
+                    DateOfBirth = item.DateOfBirth,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    NhsNumber = item.NhsNumber,
+                    PatientId = item.PatientId,
+                    Episodes = item.Episodes
+                };
+                patients.Add(patient);
             }
+            
             return patients;
         }
     }

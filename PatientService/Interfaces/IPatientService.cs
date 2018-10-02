@@ -8,5 +8,6 @@ namespace PatientService.Interfaces
     {
         Patient GetPatientById(int Id);
         List<Patient> SearchPatient(string value, int pageNo, int PageSize, Sort sort);
+        List<Patient> GetPatients();
     }
 }
