@@ -1,10 +1,12 @@
 ﻿using Autofac;
+using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using PatientService.Interfaces;
 using RestApi.Controllers;
 using RestApi.Models;
 using System;
+using System.Data.Entity;
 using System.Linq;
 
 namespace RestApiUnitTest.Controllers
@@ -16,9 +18,19 @@ namespace RestApiUnitTest.Controllers
         [SetUp]
         public void SetUp()
         {
-            IContainer container = IoCBuilder.Build("DefaultConnection");
-            var patientService = container.Resolve(typeof(IPatientService)) as RestApi.Models.PatientService;
-            objController = new PatientsController(patientService);
+            IContainer container = IoCBuilder.Build();
+
+            var builder = new ContainerBuilder();
+            //override registrations within the DI container.
+            //Autofac will use the last registered component as the default provider of that service
+            builder.RegisterType<InMemoryPatientContext>()
+                .As<IPatientContext>()
+                .InstancePerLifetimeScope();
+
+            var nContainer = builder.Build();
+            var inMemoryContext = nContainer.Resolve<IPatientContext>();
+            var patientService = container.Resolve<IPatientService>();
+            objController = new PatientsController(inMemoryContext, patientService);
         }
 
         [Test]
@@ -27,6 +39,7 @@ namespace RestApiUnitTest.Controllers
             var result = objController.GetPatientById(1);
 
             //Assert
+            Assert.IsNotNull(result);
             Assert.AreEqual(result.Episodes.Count(), 3);
             Assert.AreEqual("1111111111", result.NhsNumber);
             Assert.AreEqual("Millicent", result.FirstName);
@@ -51,6 +64,11 @@ namespace RestApiUnitTest.Controllers
 
             //Assert
             Assert.That(testDelegate, Throws.TypeOf<ArgumentException>());
+        }
+        [TearDown]
+        public void DisposeAllObjects()
+        {
+            objController = null;
         }
     }
 }

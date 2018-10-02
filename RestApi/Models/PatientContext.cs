@@ -9,8 +9,7 @@ namespace RestApi.Models
 {
     public class PatientContext : DbContext, IPatientContext
     {
-        public PatientContext(string conString)
-            : base(conString)
+        public PatientContext(): base("PatientContext")
         {
             Database.SetInitializer<PatientContext>(null);
         }

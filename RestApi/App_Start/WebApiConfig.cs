@@ -11,7 +11,13 @@ namespace RestApi
             config.Routes.MapHttpRoute(
                 name: "Patients and episodes",
                 routeTemplate: "patients/{patientId}/episodes",
-                defaults: new {controller = "Patients", action = "GetPatientById", patientId = RouteParameter.Optional});
+                defaults: new { controller = "Patients", action = "GetPatientById", patientId = RouteParameter.Optional });
+
+            config.Routes.MapHttpRoute(
+                name: "Al Patients and episodes",
+                routeTemplate: "patients",
+                defaults: new { controller = "Patients", action = "GetPatients", patientId = RouteParameter.Optional });
+
 
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.
             // To avoid processing unexpected or malicious queries, use the validation settings on QueryableAttribute to validate incoming queries.

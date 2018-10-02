@@ -11,18 +11,13 @@ namespace RestApi.Models
 {
     public class IoCBuilder
     {
-        //private static readonly string conString = ConfigurationManager.AppSettings["Connection"].ToString();
-        public static IContainer Build(string conString="")
+        public static IContainer Build()
         {
-            if(string.IsNullOrEmpty(conString))
-            {
-                conString = "PatientContext";
-            }
             var builder = new ContainerBuilder();
 
             //Register your Web API controllers.  
             builder.RegisterApiControllers(typeof(PatientsController).Assembly);
-            builder.RegisterModule(new AutoFacModule(conString));
+            builder.RegisterModule(new AutoFacModule());
 
             var container = builder.Build();
             var webApiResolver = new AutofacWebApiDependencyResolver(container);

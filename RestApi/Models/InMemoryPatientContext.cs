@@ -1,23 +1,23 @@
 ﻿using PatientService.Interfaces;
 using PatientService.Models;
 using System.Data.Entity;
-
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace RestApi.Models
 {
-    public class InMemoryPatientContext : IPatientContext
+    public class InMemoryPatientContext : DbContext, IPatientContext
     {
-        private readonly InMemoryDbSet<Patient> _patients = new InMemoryDbSet<Patient>();
-        private readonly InMemoryDbSet<Episode> _episodes = new InMemoryDbSet<Episode>();
-
-        public IDbSet<Patient> Patients
+        public InMemoryPatientContext(): base("DefaultConnection")
         {
-            get { return _patients; }
+            Database.SetInitializer<InMemoryPatientContext>(null);
         }
 
-        public IDbSet<Episode> Episodes
+        public IDbSet<Patient> Patients { get; set; }
+        public IDbSet<Episode> Episodes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            get { return _episodes; }
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }

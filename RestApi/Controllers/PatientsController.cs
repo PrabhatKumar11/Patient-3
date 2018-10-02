@@ -12,9 +12,11 @@ namespace RestApi.Controllers
     public class PatientsController : ApiController
     {
         //initialize service object
+        IPatientContext _patientContext;
         IPatientService _patientService;
-        public PatientsController(IPatientService patientService)
+        public PatientsController(IPatientContext patientContext, IPatientService patientService)
         {
+            _patientContext = patientContext;
             _patientService = patientService;
         }
         [HttpGet]
@@ -27,12 +29,21 @@ namespace RestApi.Controllers
                 return patient;
             throw new HttpResponseException(HttpStatusCode.NotFound);
         }
-        [HttpGet]
+        [HttpPost]
         public List<Patient> SearchPatient(string value, int pageNo, int pageSize, Sort sort)
         {
             if (!string.IsNullOrEmpty(value))
                 throw new ArgumentException("Invalid Search Input.");
             var patient = _patientService.SearchPatient(value,pageNo, pageSize,sort);
+            if (patient != null)
+                return patient;
+            throw new HttpResponseException(HttpStatusCode.NotFound);
+        }
+        [HttpGet]
+        [NonAction]
+        public IEnumerable<Patient> GetPatients()
+        {
+            var patient = _patientService.GetPatients();
             if (patient != null)
                 return patient;
             throw new HttpResponseException(HttpStatusCode.NotFound);
